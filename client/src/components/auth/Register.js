@@ -17,12 +17,20 @@ class Register extends Component {
     };
   }
 
-  //star ???
+  //star ?
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
       this.setState({
         errors: nextProps.errors
       });
+    }
+  }
+
+  componentDidMount() {
+    // If logged in and user navigates to Register page, should redirect them to dashboard
+    //? but why will it happen
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push("/dashboard");
     }
   }
 
@@ -123,7 +131,7 @@ class Register extends Component {
 
 Register.propTypes = {
   registerUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired, //? where is auth used in this file/component?
+  auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
 

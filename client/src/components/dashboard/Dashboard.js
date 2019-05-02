@@ -6,7 +6,8 @@ import { logoutUser } from "../../actions/authActions";
 class Dashboard extends Component {
   onLogoutClick = e => {
     e.preventDefault(); //? preventing wht default
-    this.props.logoutUser();
+    this.props.logoutUser(); //?why d linkage have to defined in reactredux in this app, instead of in the components
+    //? is it just optional or have some legit reason
   };
 
   render() {
