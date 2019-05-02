@@ -2,6 +2,11 @@
 
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { loginUser } from "../../actions/authActions";
+import classnames from "classnames";
+
 class Login extends Component {
   constructor() {
     super();
@@ -11,6 +16,18 @@ class Login extends Component {
       errors: {}
     };
   }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.auth.isAuthenticated) {
+      this.props.history.push("/dashboard"); // push user to dashboard when they login
+    }
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
+  }
+
   onChange = e => {
     this.setState({ [e.target.id]: e.target.value });
   };
@@ -21,7 +38,9 @@ class Login extends Component {
       password: this.state.password
     };
     console.log(userData);
+    this.props.loginUser(userData); // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
   };
+
   render() {
     const { errors } = this.state;
     return (
@@ -48,8 +67,15 @@ class Login extends Component {
                   error={errors.email}
                   id="email"
                   type="email"
+                  className={classnames("", {
+                    invalid: errors.email || errors.emailnotfound //?where does "invalid" this word comes from
+                  })}
                 />
                 <label htmlFor="email">Email</label>
+                <span className="red-text">
+                  {errors.email}
+                  {errors.emailnotfound}
+                </span>
               </div>
               <div className="input-field col s12">
                 <input
@@ -58,6 +84,9 @@ class Login extends Component {
                   error={errors.password}
                   id="password"
                   type="password"
+                  className={classnames("", {
+                    invalid: errors.password || errors.passwordincorrect
+                  })}
                 />
                 <label htmlFor="password">Password</label>
               </div>
