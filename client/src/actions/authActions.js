@@ -53,6 +53,7 @@ export const setCurrentUser = decoded => {
 // User loading
 export const setUserLoading = () => {
   //star - why this one no payload? it is ok to hv no payload in redux?
+  //-> yes, to be called an action it only required to return a type
   return {
     type: USER_LOADING
   };

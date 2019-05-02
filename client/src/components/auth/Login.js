@@ -13,7 +13,7 @@ class Login extends Component {
     this.state = {
       email: "",
       password: "",
-      errors: {}
+      errors: {} //? why not directly use this.props.errors instead
     };
   }
 
@@ -24,6 +24,7 @@ class Login extends Component {
     }
   }
 
+  //star ? why need this?
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
       this.props.history.push("/dashboard"); // push user to dashboard when they login
